@@ -15,6 +15,7 @@ API backend para recebimento e consulta de leituras de sensores enviadas por dis
 Backend-PHP/
 ├── salvar.php      # Recebe e persiste leituras do ESP32
 ├── listar.php      # Lista leituras para consumo no frontend
+├── seed.php        # Popula o banco com dados de teste (remover em produção)
 └── database.db     # Banco SQLite (gerado automaticamente)
 ```
 
@@ -120,6 +121,20 @@ GET /listar.php?limit=20&offset=0
   "mensagem": "..."
 }
 ```
+
+---
+
+## Desenvolvimento
+
+### Seed — dados de teste
+
+Para testar o frontend sem depender do ESP32, execute o script abaixo. Ele cria o `database.db` e insere 80 leituras fictícias distribuídas nas últimas 80 horas, com variações realistas de temperatura (20–35 °C), umidade (40–90 %) e os três valores possíveis de predição (`normal`, `alerta`, `critico`).
+
+```bash
+php seed.php
+```
+
+> ⚠️ Remova `seed.php` e `database.db` antes de subir para produção. O banco é recriado automaticamente pelo `salvar.php` quando o ESP32 começar a enviar dados.
 
 ---
 
